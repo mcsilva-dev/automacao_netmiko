@@ -1,0 +1,18 @@
+{
+    "devices": [
+        {
+            "name": "sw01",
+            "device_type": "huawei",
+            "ip": "192.168.0.1",
+            "username": "admin",
+            "password": "123456"
+        },
+        {
+            "name": "sw02",
+            "device_type": "huawei",
+            "ip": "192.168.0.2",
+            "username": "admin",
+            "password": "123456"
+        }
+    ]
+}
