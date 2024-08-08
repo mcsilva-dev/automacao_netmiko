@@ -24,6 +24,12 @@ poetry install
 ```
 para instalar todas dependencias necessarias.
 
+por fim para executar o script ative o shell do poetry e execute da seguinte forma:
+```
+poetry shell
+python main.py
+```
+
 Pronto, agora basta utilizar conforme sua necessidade, alterando o arquivo ```hosts.json``` e ```main.py```. 
 
 Lembrando que os exemplos contemplados nos arquivos sao meramente ilustrativos.
