@@ -30,9 +30,10 @@ class Huawei:
     
     
 
-    def __init__(self, device_type: str, host: str, username: str, password: str, commands: list | None | str = None) -> None:
+    def __init__(self, name: str, device_type: str, ip: str, username: str, password: str, commands: list | None | str = None) -> None:
+        self.name = name
         self.device_type = device_type
-        self.host = host
+        self.ip = ip
         self.username = username
         self.password = password
         self.commands = commands
@@ -58,41 +59,6 @@ class Huawei:
             print(f'Failed to connect to {device["host"]}')
             return None
         return connection
-
-
-    async def send_config_set(self, connection: ConnectHandler, commands: list | str = None)-> str:
-        """
-        Sends a set of configuration commands to the device.
-
-        Args:
-            connection (ConnectHandler): The connection object.
-            commands (list, str): A list|str of commands for configuration.
-
-        Returns:
-            str: The output of the commands.
-
-        """
-        if commands:
-            return connection.send_config_set(commands)
-        else:
-            return connection.send_config_set(self.commands)
-        
-    async def send_show_commands(self, connection: ConnectHandler, commands: str = None)-> str:
-        """
-        Sends a set of show commands to the device.
-
-        Args:
-            connection (ConnectHandler): The connection object.
-            commands (str): A command for show especific configuration.
-
-        Returns:
-            str: The output of the commands.
-
-        """
-        if commands:
-            return connection.send_command(commands)
-        else:
-            return connection.send_command(self.commands)
     
 
     async def run_config_commands(self, commands: list | str = None) -> None:
@@ -105,14 +71,15 @@ class Huawei:
             assert connection
             assert self.commands is list | str or commands != None, 'The commands must be a list or str'
             if commands:
-                output = await self.send_config_set(connection, commands)
+                output = connection.send_config_set(commands)
             else:
-                output = await self.send_config_set(connection, self.commands)
+                output = connection.send_config_set(self.commands)
         except AssertionError as e:
             print(f'CommandError, Detail: {e}')
         except Exception as e:
             print(f'Failed to send commands to {connection.host}')
         else:
+            # Pode alterar para return
             print(output)
     
     async def run_show_commands(self, commands: str = None) -> None:
@@ -123,37 +90,26 @@ class Huawei:
         connection = await self.create_connection()
         try:
             assert connection
-            assert self.commands is str or commands != None, 'The commands must be a string'
+            assert self.commands is str or list, 'The commands must be a string'
             if commands:
-                output = await self.send_show_commands(connection, commands)
+                output = connection.send_command(commands)
             else:
-                output = await self.send_show_commands(connection, self.commands)
+                output = connection.send_command(self.commands)
         except AssertionError as e:
-            print('aqui')
             print(f'CommandError, Detail: {e}')
         else:
+            # Pode alterar para return
             print(output)
             
 
 # Teste da classe Huawei com comandos de configuração
 if __name__ == '__main__':
-    try:
-        with open('./hosts.json') as file:
-            devices = json.load(file)
-    except FileNotFoundError:
-            print('File not found')
-    else:
-        huawei_instances = []
-        for device in devices['devices']:
-            # Cria uma instância da classe Huawei e define os comandos de configuração
-            huawei_instances.append( 
-                Huawei(
-                    device_type=device['device_type'],
-                    host=device['ip'],
-                    username=device['username'],
-                    password=device['password'],
-                )
-            )
-        async def main():
-            await asyncio.gather(*[huawei.run_config_commands(['system-view', 'interface xg 0/0/1', 'dis this']) for huawei in huawei_instances])
-        asyncio.run(main())
+    # Cria um objeto Huawei
+    huawei = Huawei(
+        device_type='huawei',
+        host='192.168.0.1',
+        commands= 'dis int des',
+        username='admin',
+        password='admin'
+    )
+    asyncio.run(huawei.run_show_commands())
