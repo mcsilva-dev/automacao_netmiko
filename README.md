@@ -1,41 +1,29 @@
-# Projeto de Automação de Redes
+# Automacao Netmiko
 
-Este projeto contém um script Python (`main.py`) para automação de redes, permitindo a conexão a dispositivos de rede e o envio de comandos de configuração.
+este e um pequeno exemplo de uso para a lib netmiko, voltado para automacao de dispositivos huawei. 
 
-## Instalação
+Clone o respositorio:
+```
+git clone https://github.com/mcsilva-dev/automacao_paramiko.git
+```
 
-1. Clone o repositório:
-    ```sh
-    git clone https://github.com/seu-usuario/seu-repositorio.git
-    cd seu-repositorio
-    ```
+Apos clonar o repositorio sera necessario ter instalado em usa maquina o poetry. Caso nao possua, execute o seguinte comando:
 
-2. Crie um ambiente virtual e ative-o:
-    ```sh
-    python3 -m venv venv
-    source venv/bin/activate
-    ```
+```
+pip install poetry
+```
 
-3. Instale as dependências:
-    ```sh
-    pip install -r requirements.txt
-    ```
+Concluida a clonagem do repositorio e instalacao do poetry, acesse a pasta:
+```
+cd /caminho/para/pasta/
+```
 
-## Uso
+execute o comando:
+```
+poetry install
+```
+para instalar todas dependencias necessarias.
 
-### Conectar a um dispositivo
+Pronto, agora basta utilizar conforme sua necessidade, alterando o arquivo ```hosts.json``` e ```main.py```. 
 
-O script permite conectar a um dispositivo de rede usando as credenciais fornecidas.
-
-```python
-device = {
-    'device_type': 'cisco_ios',
-    'host': '192.168.1.1',
-    'username': 'admin',
-    'password': 'password',
-}
-try: 
-    connection = ConnectHandler(**device)
-    print(f'Connected to {device["host"]}')
-except Exception as e:
-    print(f'Failed to connect to {device["host"]}')
+Lembrando que os exemplos contemplados nos arquivos sao meramente ilustrativos.
