@@ -12,17 +12,14 @@ class Huawei:
 		host (str): The IP address or hostname of the device.
 		username (str): The username for authentication.
 		password (str): The password for authentication.
-		commands (list, str, None, optional): A list|str of commands for configuration. Defaults to None.
 
 	Attributes:
 		device_type (str): The type of the device.
 		host (str): The IP address or hostname of the device.
 		username (str): The username for authentication.
 		password (str): The password for authentication.
-		commands (list): A list|str of commands for configuration.
 
 	Methods:
-		create_connection: Creates a connection to the device.
 		send_config_set: Sends a set of configuration commands to the device.
 		run_commands: Executes the automation.
 
